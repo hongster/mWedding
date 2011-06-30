@@ -4,7 +4,11 @@ class Controller_Main extends Controller_template {
 
 	public function action_index()
 	{
-		$this->template->content = "asd";
+		$view = View::factory('main/index');
+		
+		$view->tables = ORM::factory('table')->all_tables();
+		
+		$this->template->content = $view;
 	}
 
 } // End Main

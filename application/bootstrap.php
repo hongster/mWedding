@@ -115,9 +115,9 @@ Kohana::modules(array(
  
 Route::set('api', 'api/(<controller>(/<action>(/<id>)))')
 	->defaults(array(
-		'direction' => 'api',
-		'controller' => 'main',
-		'action'     => 'index',
+		'directory' => 'api',
+		'controller' => 'guest',
+		'action'     => 'search',
 	));
 
 Route::set('default', '(<controller>(/<action>(/<id>)))')

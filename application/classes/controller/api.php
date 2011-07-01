@@ -2,7 +2,7 @@
 /**
  * Abstract controller class for API templating.
  */
-abstract class Controller_API extends Kohana_Controller_Template {
+abstract class Controller_API extends Controller_Template {
 
 	/**
 	 * @var  View  page template

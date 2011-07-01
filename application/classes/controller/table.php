@@ -1,15 +1,12 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Controller_Table extends Controller_template {
+class Controller_Table extends Controller_Template {
 
 	public function action_update($table_id)
 	{
-		$view = View::factory('table/update');
-		
 		$table = ORM::factory('table', $table_id);
-		$view->table = $table;
-		$view->guests = $table->all_guests();
-		$this->template->content = $view;
+		$this->view->table = $table;
+		$this->view->guests = $table->all_guests();
 	}
 
 	public function action_update_name($table_id)
@@ -61,9 +58,7 @@ class Controller_Table extends Controller_template {
 			}
 		}
 		
-		$view = View::factory('table/add');
-		$view->table_name = $table_name;
-		$this->template->content = $view;
+		$this->view->table_name = $table_name;
 	}
 	
 	public function action_delete($table_id)

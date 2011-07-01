@@ -1,0 +1,1 @@
+{"status":"SUCCESS","response":<?php echo isset($content) ? $content : '{}'; ?>}

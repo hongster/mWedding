@@ -21,5 +21,19 @@ class Controller_API_Guest extends Controller_API {
 		$this->view->guest = $guest;
 		$this->view->other_guests = ORM::factory('guest')->same_table_with($guest);
 	}
+	
+	public function action_checkin($guest_id)
+	{
+		$guest = ORM::factory('guest', $guest_id);
+		$guest->checkin(TRUE);
+		$this->view->guest = $guest;
+	}
+	
+	public function action_checkout($guest_id)
+	{
+		$guest = ORM::factory('guest', $guest_id);
+		$guest->checkin(FALSE);
+		$this->view->guest = $guest;
+	}
 
 } // End Controller_API_Guest

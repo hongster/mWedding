@@ -23,6 +23,20 @@ class Model_Guest extends ORM {
 	}
 	
 	/**
+	 * Checkin/checkout guest.
+	 * 
+	 * @param bool $really TRUE to checkin, FLASE to checkout.
+	 */
+	public function checkin($really)
+	{
+		if (! $this->loaded())
+			throw new Kohana_Exception('Cannot invoke checkin because model is not loaded.');
+		
+		$this->has_arrived = (bool)$really ? 1 : 0;
+		return $this->save();
+	}
+	
+	/**
 	 * Find other guests in the same table.
 	 * 
 	 * @params Model_Guest|int Either the loaded guest or guest ID.

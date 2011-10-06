@@ -13,15 +13,40 @@ class Model_Table extends ORM {
 	public function all_guests() 
 	{
 		if (! $this->loaded())
-			throw new Kohana_Exception('Method all_guests() cannot be called on loaded objects');
+			throw new Kohana_Exception('Method all_guests() must be called on loaded objects');
 			
 		return $this->guests->find_all();
+	}
+	
+	public function num_guests() 
+	{
+		if (! $this->loaded())
+			throw new Kohana_Exception('Method num_guests() must be called on loaded objects');
+			
+		return DB::select(array('count("id")', 'count'))
+			->from('guests')
+			->where('table_id', '=', $this->id)
+			->execute()
+			->get('count');
+	}
+	
+	public function num_checkins() 
+	{
+		if (! $this->loaded())
+			throw new Kohana_Exception('Method num_checkins() must be called on loaded objects');
+			
+		return DB::select(array('count("id")', 'count'))
+			->from('guests')
+			->where('table_id', '=', $this->id)
+			->and_where('has_arrived', '=', 1)
+			->execute()
+			->get('count');
 	}
 	
 	public function delete()
 	{
 		if (! $this->loaded())
-			throw new Kohana_Exception('Method add_guest() cannot be called on loaded objects');
+			throw new Kohana_Exception('Method add_guest() must be called on loaded objects');
 		
 		ORM::factory('guest')->remove_from_table($this->pk());
 		
@@ -36,7 +61,7 @@ class Model_Table extends ORM {
 	public function add_guest(Model_Guest $guest)
 	{
 		if (! $this->loaded())
-			throw new Kohana_Exception('Method add_guest() cannot be called on loaded objects');
+			throw new Kohana_Exception('Method add_guest() must be called on loaded objects');
 		
 		$guest->table_id = $this->pk();
 		return $guest->save();

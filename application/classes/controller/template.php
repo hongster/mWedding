@@ -3,7 +3,7 @@
  * Web template
  */
 class Controller_Template extends Kohana_Controller_Template {
-	protected $view;
+	public $view;
 	
 	function before() 
 	{

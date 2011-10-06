@@ -80,7 +80,7 @@ if (isset($_SERVER['KOHANA_ENV']))
  * - boolean  caching     enable or disable internal caching                 FALSE
  */
 Kohana::init(array(
-	'base_url'   => '/qrwedding/',
+	'base_url'   => '/mwedding/',
 	'index_file' => FALSE,
 ));
 
@@ -120,6 +120,19 @@ Route::set('api', 'api/(<controller>(/<action>(/<id>)))')
 		'action'     => 'search',
 	));
 
+Route::set('mobile_checkin', '<controller>/<action>/<guest_id>/<checkin>', 
+	array('controller'=>'mobile', 'action'=>'checkin', 'guest_id'=>'\d+', 'checkin'=>'1|0'))
+	->defaults(array(
+		'controller' => 'mobile',
+		'action'     => 'checkin',
+	));
+
+Route::set('mobile_table', '<controller>/<action>/<id>', array('controller'=>'mobile', 'action'=>'table', 'id'=>'\d+'))
+	->defaults(array(
+		'controller' => 'mobile',
+		'action'     => 'table',
+	));
+	
 Route::set('default', '(<controller>(/<action>(/<id>)))')
 	->defaults(array(
 		'controller' => 'main',

@@ -12,7 +12,7 @@
 </head> 
 
 <body>
-	<div data-role="page"> 
+	<div data-role="page" data-dom-cache="false"> 
 		<div data-role="header" data-theme="e">
 			<?php if (Request::current()->action() != 'index'): ?>
 				<?php echo HTML::anchor('mobile/index', 'Home'); ?>
@@ -27,8 +27,8 @@
 		</div> 
 		
 		<div data-role="footer" id="footer" data-theme="e">
-			mWedding by <a href="http://twitter.com/hongster" rel="external", data-ajax="false">@hongster</a>
+			<strong>mWedding</strong> by <span><a href="http://twitter.com/hongster" rel="external" data-ajax="false" style="">@hongster</a></span>
 		</div> 
-	</div> 
+	</div>
 </body>
 </html>

@@ -8,6 +8,10 @@ class Controller_Mobile extends Controller_Template {
 	public function action_index()
 	{
 		$this->view->tables = ORM::factory('table')->all_tables();
+		
+		$guest = ORM::factory('guest');
+		$this->view->total_guests = $guest->total_guests();
+		$this->view->total_arrived = $guest->total_arrived();
 	}
 	
 	public function action_table()

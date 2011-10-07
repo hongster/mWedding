@@ -1,5 +1,7 @@
 <div class="content-primary">
-	<ul data-role="listview" data-role="collapsible-set" data-theme="b">
+	<ul data-role="listview" data-role="collapsible-set" data-divider-theme="b">
+		<li data-role="list-divider"><?php echo "Arrival: {$total_arrived}/{$total_guests}"; ?></li>
+		
 		<?php foreach ($tables as $table): ?>
 			<li>
 				<?php echo HTML::anchor(

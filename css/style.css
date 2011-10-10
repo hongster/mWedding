@@ -1,0 +1,51 @@
+@import url(http://fonts.googleapis.com/css?family=Leckerli+One);
+
+#content {
+	/*background-image: url(../img/16_col.gif);*/
+}
+
+footer {
+	text-align: center;
+}
+
+body {
+	color: #333333;
+}
+
+/* General */
+h1, h2, h3, h4, h5, h6, .title {
+	color: #FF0000;
+	opacity: 0.6;
+}
+
+a, em, strong {
+	color: #FF0000;
+}
+
+a {
+	text-decoration: none;
+}
+
+.button{
+	background-color: #ff0000;
+	color: #ffffff;
+	font-weight: bold;
+	border: 1px solid #ff000;
+	padding: 10px;
+	border-radius: 8px;
+}
+
+#site-title {
+	font-family: 'Leckerli One', cursive;
+	display: inline;
+	opacity: 0.7;
+}
+
+/* main/index */
+#frontpage-banner {
+	text-align: center;
+}
+
+#get-started {
+	text-align: center;
+}

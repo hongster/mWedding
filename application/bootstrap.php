@@ -133,6 +133,12 @@ Route::set('mobile_table', '<controller>/<action>/<id>', array('controller'=>'mo
 		'action'     => 'table',
 	));
 	
+Route::set('table_index', '<controller>/<action>/<alias>', array('controller'=>'table', 'action'=>'index', 'alias'=>'[a-aA-Z0-9]+'))
+	->defaults(array(
+		'controller' => 'table',
+		'action'     => 'index',
+	));	
+
 Route::set('default', '(<controller>(/<action>(/<id>)))')
 	->defaults(array(
 		'controller' => 'main',

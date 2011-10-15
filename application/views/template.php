@@ -29,6 +29,9 @@
 	
 	<footer class="container_12">
 		(CC) BY | <a href="http://about.me/hongster">@hongster</a>
+		Powered by: <a href="http://kohanaframework.org/">Kohana</a>
+		| <a href="http://angularjs.org/">AngularJS</a>
+		| <a href="http://jquery.com/">jQuery</a>
 	</footer>
 </body>
 </html>

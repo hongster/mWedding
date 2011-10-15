@@ -7,6 +7,36 @@ class Controller_Main extends Controller_Template {
 		$this->view->tables = ORM::factory('table')->all_tables();
 	}
 	
+	public function action_ajax_new()
+	{
+		$this->auto_render = FALSE;
+		
+		if ( ! isset($_POST['num_tables'])) {
+			$this->response->body(json_encode(array(
+				'status' => 'ERROR',
+				'err_msg' => 'Please indicate number of tables.'
+			)));
+			return;
+		}
+		
+		$num_tables = (int)Arr::get($_POST, 'num_tables', 0);
+		if ($num_tables < 1)
+		{
+			$this->response->body(json_encode(array(
+				'status' => 'ERROR',
+				'err_msg' => 'Please indicate number of tables.'
+			)));
+			return;
+		}
+		
+		$wedding = ORM::factory('wedding')->new_wedding($num_tables);
+		$this->response->body(json_encode(array(
+				'status' => 'SUCCESS',
+				'redirect' => Route::url('table_index', array('alias'=>$wedding->alias)),
+			)));
+		return;
+	}
+	
 	public function action_search($query = NULL)
 	{
 		$query = $this->_determine_query($query);

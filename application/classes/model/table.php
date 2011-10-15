@@ -1,6 +1,10 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 class Model_Table extends ORM {
+	protected $_belongs_to = array(
+		'wedding' => array(),
+	);
+	
 	protected $_has_many = array(
 		'guests' => array(),
 	);

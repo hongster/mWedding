@@ -14,6 +14,7 @@ body {
 
 /* General */
 h1, h2, h3, h4, h5, h6, label, .title {
+	font-weight: bold;
 	color: #FF0000;
 	opacity: 0.8;
 }
@@ -30,6 +31,21 @@ a {
 	text-decoration: none;
 }
 
+/* Form elements */
+
+input[type=text] {
+	border-style: none;
+	border-bottom: 1px solid #000;
+}
+
+input[type=submit] {
+	cursor: pointer;
+	border-style: none;
+	background-color: #ff0000;
+	color: #ffffff;
+	font-weight: bold;
+}
+
 .button{
 	background-color: #ff0000;
 	color: #ffffff;
@@ -37,6 +53,16 @@ a {
 	border: 1px solid #ff000;
 	padding: 10px;
 	border-radius: 8px;
+}
+
+.error {
+	color: #FF0000;
+	font-weight: bold;
+} 
+
+.info {
+	color: #007F00;
+	font-weight: bold;
 }
 
 #site-title {
@@ -50,6 +76,11 @@ a {
 	text-align: center;
 }
 
-#get-started {
-	text-align: center;
+#table-listing {
+	border-right: 1px solid #efefef;
+}
+
+#table-listing li {
+	margin-left: 0px;
+	list-style-type: none;
 }

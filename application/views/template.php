@@ -23,6 +23,15 @@
 	</header>
 	
 	<section id="content" class="container_12">
+		
+		<?php if (isset($err_msg)): ?>
+			<p class="grid_12 error flash"><?php echo HTML::chars($err_msg); ?></p>
+			<div class="clear"></div>
+		<?php elseif (isset($info_msg)): ?>
+			<p class="grid_12 info flash"><?php echo HTML::chars($info_msg); ?>
+			<div class="clear"></div>		
+		<?php endif; ?>
+		
 		<?php if(isset($content)) echo $content; ?>
 	</section>
 	<!-- #content -->
@@ -33,5 +42,17 @@
 		| <a href="http://angularjs.org/">AngularJS</a>
 		| <a href="http://jquery.com/">jQuery</a>
 	</footer>
+	
+	<script>
+	$(document).ready(function() {
+		$(".flash").animate(
+			{"background-color": "#FFFF00"},
+			3000,
+			function() {
+				$(this).animate({"background-color": "#FFFFbb"}, 2000);
+			}
+		);
+	});
+	</script>
 </body>
 </html>

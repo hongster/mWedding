@@ -55,7 +55,7 @@
 <div id="get-started-form" title="Get Started">
 	<p>Indicate the number of tables in the wedding dinner. Don't worry, you can change it later.</p>
 	
-	<?php echo Form::open('main/ajax_new'); ?>
+	<?php echo Form::open('wedding/ajax_new'); ?>
 		<fieldset>
 			<p>
 				<label for="num_tables">Number of tables:</label>

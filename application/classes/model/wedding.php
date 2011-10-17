@@ -7,10 +7,51 @@ class Model_Wedding extends ORM {
 		'tables' => array(),
 	);
 	
+	public function total_guests()
+	{
+		if ( ! $this->loaded())
+			throw new Kohana_Exception('Model_Wedding->total_guests() must be called on loaded object');
+			
+		return DB::select(array('count("guests.id")', 'count'))
+			->from('weddings', 'tables', 'guests')
+			->where('weddings.id', '=', 'tables.wedding_id')
+			->and_where('tables.id', '=', 'guests.table_id')
+			->and_where('weddings.alias', '=', $this->alias)
+			->execute()
+			->get('count');
+	}
+	
+	public function total_checkins()
+	{
+		if ( ! $this->loaded())
+			throw new Kohana_Exception('Model_Wedding->total_checkins() must be called on loaded object');
+		
+		return DB::select(array('count("guests.id")', 'count'))
+			->from('weddings', 'tables', 'guests')
+			->where('weddings.id', '=', 'tables.wedding_id')
+			->and_where('tables.id', '=', 'guests.table_id')
+			->and_where('guests.has_arrived', '=', 1)
+			->and_where('weddings.alias', '=', $this->alias)
+			->execute()
+			->get('count');
+	}
+	
+	/**
+	 * Initialise thie model. Load model by alias.
+	 * @return ORM
+	 */
+	public function load_alias($alias)
+	{
+		$this->where('alias', '=', $alias)
+			->find();
+			
+		return $this;
+	}
+	
 	public function new_wedding($num_tables) 
 	{
 		if ($this->loaded())
-			throw new Kohana_Exception('Method new_wedding() cannot be called on loaded object');
+			throw new Kohana_Exception('Model_Wedding->new_wedding() cannot be called on loaded object');
 		
 		// Generate unique alias
 		while (TRUE)

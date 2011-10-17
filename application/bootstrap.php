@@ -133,9 +133,9 @@ Route::set('mobile_table', '<controller>/<action>/<id>', array('controller'=>'mo
 		'action'     => 'table',
 	));
 	
-Route::set('table_index', '<controller>/<action>/<alias>', array('controller'=>'table', 'action'=>'index', 'alias'=>'[a-aA-Z0-9]+'))
+Route::set('wedding_index', 'wedding/index(/<alias>)', array('alias'=>'[a-zA-Z0-9]+'))
 	->defaults(array(
-		'controller' => 'table',
+		'controller' => 'wedding',
 		'action'     => 'index',
 	));	
 

@@ -4,18 +4,42 @@
  */
 class Controller_Template extends Kohana_Controller_Template {
 	public $view;
+	public $err_msg; // Flash msg in webpage
+	public $info_message; // Flash msg in webpage
 	
-	function before() 
+	protected function set_err_msg($err_msg)
+	{
+		Session::instance()->set('err_msg', $err_msg);
+	}
+	
+	protected function set_info_msg($info_msg)
+	{
+		Session::instance()->set('info_msg', $info_msg);
+	}
+	
+	public function before() 
 	{
 		parent::before();
 		
 		if ($this->auto_render === TRUE)
 		{
+			// Render flash msg
+			$session = Session::instance();
+			if ($msg = $session->get_once('err_msg'))
+			{
+				$this->template->err_msg = $msg;
+			}
+			elseif ($msg = $session->get_once('info_msg'))
+			{
+				$this->template->info_msg = $msg;
+			}
+			
+			// XXX Not efficient, need improvement
 			$this->view = View::factory();
 		}
 	}
 	
-	function after() 
+	public function after() 
 	{	
 		if ($this->auto_render === TRUE)
 		{

@@ -1,33 +1,75 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 class Controller_Wedding extends Controller_Template {
+	protected $wedding = FALSE;
+
+	/**
+	 * Create new table
+	 */
+	public function action_new_table()
+	{
+		$this->_init();
+		
+		// Input validation
+		$table_name = trim(Arr::get($_POST, 'table_name', ''));
+		if ($table_name == '') 
+		{
+			$this->flash_err_msg('Please specify a table name.');
+			$this->auto_render = FALSE;
+			return $this->request->redirect('wedding/index');
+		}
+		
+		// Create table
+		$table = ORM::factory('table');
+		$table->wedding_id = $this->wedding->pk();
+		$table->name = $table_name;
+		$table->save();
+		
+		$this->auto_render = FALSE;
+		return $this->request->redirect('wedding/table/'.$table->pk());
+	}
+	
+	public function action_table()
+	{
+		// TODO
+	}
 
 	public function action_index()
 	{
-		// Login.
+		$this->_init();
+		$this->view->wedding = $this->wedding;
+		$this->view->tables = $this->wedding->tables->find_all();
+	}
+	
+	/**
+	 * Check if user has logged in. Load $this->wedding based on saved
+	 * alias token. Redirect if user has not logged in.
+	 */
+	private function _init()
+	{
+		// Retrieve alias from session/cookie
 		$alias = $this->_get_alias();
 		if ($alias == FALSE)
 		{
-			$session->set('err_msg', "Please create a new wedding checklist.");
+			$this->flash_err_msg("Please create a new wedding checklist.");
 			$this->auto_render = FALSE;
-			$this->request->redirect('main');
+			return $this->request->redirect('main');
 		}
 		
-		$wedding = ORM::factory('wedding')->load_alias($alias);
+		// Verify alias
+		$this->wedding = ORM::factory('wedding')->load_alias($alias);
 		
 		$session = Session::instance();
-		if ( ! $wedding->loaded())
+		if ( ! $this->wedding->loaded())
 		{
 			$this->_logout();
-			$session->set('err_msg', "'$alias' is an invalid wedding alias ID.");
+			$this->flash_err_msg("'$alias' is an invalid wedding alias ID.");
 			$this->auto_render = FALSE;
-			$this->request->redirect('main');
+			return $this->request->redirect('main');
 		}
 		
-		// Login session
+		// Continue login status
 		$this->_login($alias);
-		$this->view->wedding = $wedding;
-		$this->view->tables = $wedding->tables->find_all();
 	}
 	
 	/**
@@ -51,7 +93,7 @@ class Controller_Wedding extends Controller_Template {
 	
 	private function _logout() 
 	{
-		Session::instance()->restart();
+		Session::instance()->delete('alias');
 		Cookie::delete('alias');
 	}
 	

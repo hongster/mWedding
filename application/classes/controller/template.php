@@ -7,12 +7,12 @@ class Controller_Template extends Kohana_Controller_Template {
 	public $err_msg; // Flash msg in webpage
 	public $info_message; // Flash msg in webpage
 	
-	protected function set_err_msg($err_msg)
+	protected function flash_err_msg($err_msg)
 	{
 		Session::instance()->set('err_msg', $err_msg);
 	}
 	
-	protected function set_info_msg($info_msg)
+	protected function flash_info_msg($info_msg)
 	{
 		Session::instance()->set('info_msg', $info_msg);
 	}

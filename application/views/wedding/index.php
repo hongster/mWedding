@@ -1,14 +1,14 @@
-<section class="gird_12">
+<section class="grid_12">
 	<p>
 		Remeber to bookmark this URL! <?php echo HTML::anchor(
 			Route::url('wedding_index', array('alias'=>Session::instance()->get('alias')), TRUE)
 		); ?>
-	</p>
+</p>
 </section>
 <div class="clear"></div>
 
 <section>
-	<article class="grid_6 alpha" id="table-listing">
+	<article class="grid_6" id="table-listing">
 		<h2>Tables</h2>
 		
 		<ul>

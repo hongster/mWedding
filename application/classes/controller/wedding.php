@@ -122,7 +122,7 @@ class Controller_Wedding extends Controller_Template {
 		$wedding = ORM::factory('wedding')->new_wedding($num_tables);
 		$this->response->body(json_encode(array(
 				'status' => 'SUCCESS',
-				'redirect' => Route::url('table_index', array('alias'=>$wedding->alias)),
+				'redirect' => Route::url('wedding_index', array('alias'=>$wedding->alias), TRUE),
 			)));
 		return;
 	}

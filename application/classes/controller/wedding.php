@@ -31,7 +31,52 @@ class Controller_Wedding extends Controller_Template {
 	
 	public function action_table()
 	{
-		// TODO
+		$this->_init();
+		
+		// Verify table ID
+		$table = $this->wedding->get_table($this->request->param('id', ''));
+		if ( ! $table->loaded())	
+		{
+			$this->flash_err_msg('You were trying to access an invalid Table page.');
+			$this->auto_render = FALSE;
+			return $this->request->redirect('wedding/index');
+		}
+		
+		$this->view->table_id = $table->id;
+	}
+	
+	public function action_ajax_table()
+	{
+		$this->_init();
+		$table_id = $this->request->param('id', '');
+		// Verify table ID
+		$table = $this->wedding->get_table($table_id);
+		if ( ! $table->loaded())
+		{
+			return json_encode(array('err' => "Invalid table ID, '$table_id'"));
+		}
+		
+		// return table+guests info in JSON
+		$array = array(
+			'table_id' => $table->id,
+			'name' => $table->name,
+			'wedding_id' => $table->wedding_id,
+			'num_guests' => $table->num_guests(),
+			'num_checkins' => $table->num_checkins(),
+			'guests' => array(),
+		);
+		foreach ($table->guests->find_all() as $guest)
+		{
+			$array['guests'][] = array(
+				'guest_id' => $tuest->id,
+				'table_id' => $guest->table_id,
+				'name' => $guest->name,
+				'has_arrived' => $guest->has_arrived,
+			);
+		}
+		
+		$this->auto_render = FALSE;
+		$this->response->body(json_encode($array));
 	}
 
 	public function action_index()

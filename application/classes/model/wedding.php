@@ -7,6 +7,22 @@ class Model_Wedding extends ORM {
 		'tables' => array(),
 	);
 	
+	/**
+	 * Return table model based on $table_id.
+	 * The method must be used on loaded Wedding model, it makes sure
+	 * the loaded table belongs to this model.
+	 * 
+	 * @prarm int $table_id
+	 * @return Model_Table
+	 */
+	public function get_table($table_id)
+	{
+		if ( ! $this->loaded())
+			throw new Kohana_Exception('Model_Wedding->total_guests() must be called on loaded object');
+			
+		return $this->tables->where('id', '=', $table_id)->find();
+	}
+	
 	public function total_guests()
 	{
 		if ( ! $this->loaded())

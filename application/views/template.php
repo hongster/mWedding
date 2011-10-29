@@ -17,7 +17,7 @@
 <body>
 	<header class="container_12">
 		<section class="grid_12">
-			<h1 id="site-title">mWedding</h1>
+			<h1 id="site-title"><?php echo HTML::anchor('/wedding/index', 'mWedding'); ?></h1>
 			<em>Your wedding assistant</em>
 		</section>
 	</header>

@@ -1,7 +1,7 @@
 <section class="grid_12" ng:controller="TableController">
 	<h2>{{table.name}}</h2>
 	
-	<?php echo Form::open("wedding/add_guest/$table_id"); ?>
+	<?php echo Form::open(URL::site("wedding/add_guest/$table_id", TRUE)); ?>
 		<label for="guest_name">Guest name:</label>
 		<input type="text" name="guest_name" id="guest_name" />
 		<input type="submit" value="Add Guest" />
@@ -12,19 +12,25 @@
 	</p>
 
 	<h3>Waiting</h3>
-	<ul ng:repeat="guest in table.guests.$filter({has_arrived:0})">
-		<li>{{guest.name | tagLinker}}</li>
+	<ul class="guest-list">
+		<li ng:repeat="guest in table.guests.$filter({has_arrived:0}).$orderBy('name')">
+			{{guest.name | tagLinker}} 
+			[<a href="<?php echo URL::site('/wedding/guest_checkin', TRUE); ?>/{{guest.guest_id}}">Checkin</a>]
+		</li>
 	</ul>
 	
 	<h3>Arrived</h3>
-	<ul ng:repeat="guest in table.guests.$filter({has_arrived:1})">
-		<li>{{guest.name | tagLinker | html}}</li>
+	<ul class="guest-list">
+		<li ng:repeat="guest in table.guests.$filter({has_arrived:1}).$orderBy('name')">
+			{{guest.name | tagLinker | html}}
+			[<a href="<?php echo URL::site('/wedding/guest_checkout', TRUE); ?>/{{guest.guest_id}}">Checkout</a>]
+		</li>
 	</ul>
 	
 </section>
 <div class="clear"></div>
 
-<script>
+<script>	
 	/* Convert tags to links */
 	angular.filter(
 		'tagLinker',

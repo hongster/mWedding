@@ -84,3 +84,12 @@ input[type=submit] {
 	margin-left: 0px;
 	list-style-type: none;
 }
+
+/* wedding/table */
+ul.guest-list {
+	list-style: none;
+}
+
+ul.guest-list li {
+	margin-bottom: 10px;
+}

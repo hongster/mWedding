@@ -3,6 +3,64 @@
 class Controller_Wedding extends Controller_Template {
 	protected $wedding = FALSE;
 
+	public function action_add_guest()
+	{	
+		$this->auto_render = FALSE;
+		
+		$this->_init();
+		$table_id = $this->request->param('id', '');
+		// Verify table ID
+		$table = $this->wedding->get_table($table_id);
+		if ( ! $table->loaded())
+		{
+			$this->flash_err_msg("Invalid table ID, $table_id");
+			return $this->request->redirect('wedding/index');
+		}
+		
+		// Input validation
+		$guest_name = trim(Arr::get($_POST, 'guest_name', ''));
+		if ($guest_name == '') 
+		{
+			$this->flash_err_msg('Please specify a guest name.');
+			return $this->request->redirect($this->request->referrer());
+		}
+		
+		$this->wedding->new_guest($guest_name, $table);
+		return $this->request->redirect('wedding/table/'.$table_id);
+	}
+	
+	public function action_guest_checkin()
+	{
+		$this->auto_render = FALSE;
+		
+		$this->_init();
+		$guest_id = $this->request->param('id', FALSE);
+		if ( ! $guest_id)
+		{
+			$this->flash_err_msg('Missing guest ID.');
+			return $this->request->redirect('wedding/index');
+		}
+		
+		$guest = $this->wedding->checkin_guest($guest_id);
+		return $this->request->redirect('wedding/table/'.$guest->table_id);
+	}
+	
+	public function action_guest_checkout()
+	{
+		$this->auto_render = FALSE;
+		
+		$this->_init();
+		$guest_id = $this->request->param('id', FALSE);
+		if ( ! $guest_id)
+		{
+			$this->flash_err_msg('Missing guest ID.');
+			return $this->request->redirect('wedding/index');
+		}
+		
+		$guest = $this->wedding->checkout_guest($guest_id);
+		return $this->request->redirect('wedding/table/'.$guest->table_id);
+	}
+
 	/**
 	 * Create new table
 	 */
@@ -45,6 +103,9 @@ class Controller_Wedding extends Controller_Template {
 		$this->view->table_id = $table->id;
 	}
 	
+	/**
+	 * @return JSON table information.
+	 */
 	public function action_ajax_table()
 	{
 		$this->_init();
@@ -68,7 +129,7 @@ class Controller_Wedding extends Controller_Template {
 		foreach ($table->guests->find_all() as $guest)
 		{
 			$array['guests'][] = array(
-				'guest_id' => $tuest->id,
+				'guest_id' => $guest->id,
 				'table_id' => $guest->table_id,
 				'name' => $guest->name,
 				'has_arrived' => $guest->has_arrived,
@@ -96,7 +157,6 @@ class Controller_Wedding extends Controller_Template {
 		$alias = $this->_get_alias();
 		if ($alias == FALSE)
 		{
-			$this->flash_err_msg("Please create a new wedding checklist.");
 			$this->auto_render = FALSE;
 			return $this->request->redirect('main');
 		}

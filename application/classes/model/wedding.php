@@ -8,6 +8,70 @@ class Model_Wedding extends ORM {
 	);
 	
 	/**
+	 * Create new guest, attach to a specified table.
+	 * @param String $guest_name
+	 * @param Model_Table | int (table ID)
+	 * @return Model_Guest
+	 */
+	public function new_guest($guest_name, $table)
+	{
+		if ( ! $this->loaded())
+			throw new Kohana_Exception('Model_Wedding->new_guest() must be called on loaded object');
+		
+		// Check if table belongs to wedding
+		if ( ! is_object($table))
+		{
+			$table = ORM::factory('table', $table);
+		}
+		if (( ! $table->loaded()) || ($table->wedding_id != $this->id))
+			throw new Kohana_Exception('Model_Wedding->new_guest() invalid table parameter');
+		
+		$guest = ORM::factory('guest');
+		$guest->name = $guest_name;
+		$guest->has_arrived = 0;
+		$guest->table_id = $table->id;
+		return $guest->save();
+	}
+	
+	/**
+	 * @param Model_Guest | int (guest ID)
+	 */
+	public function checkin_guest($guest)
+	{
+		if ( ! is_object($guest))
+		{
+			$guest = ORM::factory('guest', $guest);
+		}
+		if ( ! $guest->loaded())
+			throw new Kohana_Exception('Model_Wedding->checkin_guest() invalid guest parameter');
+			
+		if ($guest->table->wedding_id != $this->id)
+			throw new Kohana_Exception('Model_Wedding->checkin_guest() guest does not belong to this wedding');
+			
+		$guest->has_arrived = 1;
+		return $guest->save();
+	}
+	
+	/**
+	 * @param Model_Guest | int (guest ID)
+	 */
+	public function checkout_guest($guest)
+	{
+		if ( ! is_object($guest))
+		{
+			$guest = ORM::factory('guest', $guest);
+		}
+		if ( ! $guest->loaded())
+			throw new Kohana_Exception('Model_Wedding->checkin_guest() invalid guest parameter');
+			
+		if ($guest->table->wedding_id != $this->id)
+			throw new Kohana_Exception('Model_Wedding->checkin_guest() guest does not belong to this wedding');
+			
+		$guest->has_arrived = 0;
+		return $guest->save();
+	}
+	
+	/**
 	 * Return table model based on $table_id.
 	 * The method must be used on loaded Wedding model, it makes sure
 	 * the loaded table belongs to this model.
@@ -18,7 +82,7 @@ class Model_Wedding extends ORM {
 	public function get_table($table_id)
 	{
 		if ( ! $this->loaded())
-			throw new Kohana_Exception('Model_Wedding->total_guests() must be called on loaded object');
+			throw new Kohana_Exception('Model_Wedding->get_table() must be called on loaded object');
 			
 		return $this->tables->where('id', '=', $table_id)->find();
 	}
@@ -28,11 +92,11 @@ class Model_Wedding extends ORM {
 		if ( ! $this->loaded())
 			throw new Kohana_Exception('Model_Wedding->total_guests() must be called on loaded object');
 			
-		return DB::select(array('count("guests.id")', 'count'))
-			->from('weddings', 'tables', 'guests')
-			->where('weddings.id', '=', 'tables.wedding_id')
-			->and_where('tables.id', '=', 'guests.table_id')
-			->and_where('weddings.alias', '=', $this->alias)
+		return (String) DB::select(array('count("guests.id")', 'count'))
+			->from('guests')
+			->join('tables', 'LEFT')
+			->on('guests.table_id', '=', 'tables.id')
+			->where('tables.wedding_id', '=', $this->id)
 			->execute()
 			->get('count');
 	}
@@ -42,12 +106,12 @@ class Model_Wedding extends ORM {
 		if ( ! $this->loaded())
 			throw new Kohana_Exception('Model_Wedding->total_checkins() must be called on loaded object');
 		
-		return DB::select(array('count("guests.id")', 'count'))
-			->from('weddings', 'tables', 'guests')
-			->where('weddings.id', '=', 'tables.wedding_id')
-			->and_where('tables.id', '=', 'guests.table_id')
+		return (String) DB::select(array('count("guests.id")', 'count'))
+			->from('guests')
+			->join('tables', 'LEFT')
+			->on('guests.table_id', '=', 'tables.id')
+			->where('tables.wedding_id', '=', $this->id)
 			->and_where('guests.has_arrived', '=', 1)
-			->and_where('weddings.alias', '=', $this->alias)
 			->execute()
 			->get('count');
 	}

@@ -3,6 +3,27 @@
 class Controller_Wedding extends Controller_Template {
 	protected $wedding = FALSE;
 
+	public function action_ajax_update_table_name()
+	{
+		$this->auto_render = FALSE;
+
+		$table_name = trim(Arr::get($_POST, 'table_name', ''));
+		if ($table_name == '')
+			return $this->response->body(json_encode(array('err'=>'Missing table name.')));
+
+		$this->_init();
+		$table_id = $this->request->param('id', '');
+		// Verify table ID
+		$table = $this->wedding->get_table($table_id);
+		if ( ! $table->loaded())
+			return $this->response->body(json_encode(array('err'=>"Invalid table ID, $table_id")));
+
+		$table->name = $table_name;
+		$table->save();
+
+		return $this->response->body(json_encode(array('status'=>'SUCCESS')));
+	}
+
 	/**
 	 * Search guest by name
 	 */
@@ -10,7 +31,6 @@ class Controller_Wedding extends Controller_Template {
 	{
 		// Input validation
 		$query = trim(Arr::get($_POST, 'query', ''));
-
 		if ($query == '')
 		{
 			$this->auto_render = FALSE;

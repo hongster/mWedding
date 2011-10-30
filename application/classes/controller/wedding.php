@@ -3,6 +3,22 @@
 class Controller_Wedding extends Controller_Template {
 	protected $wedding = FALSE;
 
+	public function action_delete_guest()
+	{
+		$this->auto_render = FALSE;
+		$this->_init();
+		$guest_id = $table_id = $this->request->param('id', '');
+		$guest = $this->wedding->get_guest($guest_id);
+		if ($guest->loaded()) {
+			$guest->delete();
+		}
+		
+		return $this->request->redirect($this->request->referrer());
+	}
+	
+	/**
+	 * Change table name.
+	 */
 	public function action_ajax_update_table_name()
 	{
 		$this->auto_render = FALSE;

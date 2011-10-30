@@ -16,6 +16,7 @@
 		<li ng:repeat="guest in table.guests.$filter({has_arrived:0}).$orderBy('name')">
 			{{guest.name | tagLinker | html}}
 			[<a href="<?php echo URL::site('/wedding/guest_checkin', TRUE); ?>/{{guest.guest_id}}">Checkin</a>]
+			[<a href="#" ng:click="deleteGuest(guest.name, guest.guest_id)">Delete</a>]
 		</li>
 	</ul>
 
@@ -24,6 +25,7 @@
 		<li ng:repeat="guest in table.guests.$filter({has_arrived:1}).$orderBy('name')">
 			{{guest.name | tagLinker | html}}
 			[<a href="<?php echo URL::site('/wedding/guest_checkout', TRUE); ?>/{{guest.guest_id}}">Checkout</a>]
+			[<a href="#" ng:click="deleteGuest(guest.name, guest.guest_id)">Delete</a>]
 		</li>
 	</ul>
 
@@ -60,6 +62,12 @@
 				}
 			);
 		};
+		
+		self.deleteGuest = function(name, id) {
+			if (confirm('Are you sure you want to delete "'+name+'"?')) {
+				window.location.href = "<?php echo URL::site("wedding/delete_guest", true); ?>/" + id;
+			}
+		}
 
 		/* Setup inline edit for table name */
 		self.editTableName = function() {

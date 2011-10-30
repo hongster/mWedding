@@ -6,6 +6,24 @@ class Model_Wedding extends ORM {
 	protected $_has_many = array(
 		'tables' => array(),
 	);
+	
+	/**
+	 * Load guest object, while validating this $guest_id
+	 * @param int $guest_id
+	 * @return Model_Guest
+	 */
+	public function get_guest($guest_id)
+	{
+		if ( ! $this->loaded())
+			throw new Kohana_Exception('Model_Wedding->get_guest() must be called on loaded object');
+			
+		return ORM::factory('guest')
+			->join('tables')
+			->on('guests.table_id', '=', 'tables.id')
+			->where('tables.wedding_id', '=', $this->id)
+			->where('guests.id', '=', $guest_id)
+			->find();
+	}
 
 	/**
 	 * Search guests by name.

@@ -3,10 +3,14 @@
 class Controller_Wedding extends Controller_Template {
 	protected $wedding = FALSE;
 
+	/**
+	 * Search guest by name
+	 */
 	public function action_search_guest()
 	{
 		// Input validation
 		$query = trim(Arr::get($_POST, 'query', ''));
+
 		if ($query == '')
 		{
 			$this->auto_render = FALSE;
@@ -15,6 +19,34 @@ class Controller_Wedding extends Controller_Template {
 		}
 
 		$this->view->query = $query;
+	}
+
+	public function action_ajax_search_guest()
+	{
+		$this->auto_render = FALSE;
+		$this->_init();
+
+		$ret = array('guests'=>array());
+		// Input validation
+		$query = trim(Arr::get($_POST, 'query', ''));
+
+		if ($query == '')
+			return $this->response->body(json_encode($ret));
+
+		$guests = $this->wedding->search_guests($query);
+
+		foreach ($guests as $guest)
+		{
+			$ret['guests'][] = array(
+				'guest_id' => $guest->id,
+				'name' => $guest->name,
+				'has_arrived' => $guest->has_arrived,
+				'table_name' => $guest->table->name,
+				'table_id' => $guest->table->id,
+			);
+		}
+
+		return $this->response->body(json_encode($ret));
 	}
 
 	public function action_add_guest()

@@ -31,6 +31,11 @@ a {
 	text-decoration: none;
 }
 
+th {
+	font-weight: bold;
+	text-align: center;
+}
+
 /* Form elements */
 
 input[type=text] {
@@ -58,7 +63,7 @@ input[type=submit] {
 .error {
 	color: #FF0000;
 	font-weight: bold;
-} 
+}
 
 .info {
 	color: #007F00;
@@ -92,4 +97,16 @@ ul.guest-list {
 
 ul.guest-list li {
 	margin-bottom: 10px;
+}
+
+/* wedding/search_guest */
+table.search_result {
+	width: 50%;
+	border-collapse:separate;
+	border-spacing: 2px;
+}
+
+table.search_result td {
+	background-color: #fff0f0;
+	padding: 2px;
 }

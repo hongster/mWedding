@@ -18,7 +18,7 @@
 			<th>Arrived</th>
 		</tr>
 
-		<tr ng:repeat="guest in result.guests.$orderBy(['+name', '+table_name', '+has_arrived'])">
+		<tr ng:repeat="guest in result.guests.$orderBy(['+has_arrived', '+name', '+table_name'])">
 			<td><a href="<?php echo URL::site('wedding/table', TRUE); ?>/{{guest.table_id}}">{{guest.name}}</a></td>
 			<td><a href="<?php echo URL::site('wedding/table', TRUE); ?>/{{guest.table_id}}">{{guest.table_name}}</a></td>
 			<td>{{guest.has_arrived | arrivalStatus}}</td>

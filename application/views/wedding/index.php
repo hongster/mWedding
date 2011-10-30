@@ -1,6 +1,6 @@
 <section class="grid_12">
 	<p>
-		Remeber to bookmark this URL! <?php echo HTML::anchor(
+		Remember to bookmark this URL! <?php echo HTML::anchor(
 			Route::url('wedding_index', array('alias'=>Session::instance()->get('alias')), TRUE)
 		); ?>
 </p>
@@ -10,7 +10,7 @@
 <section>
 	<article class="grid_6" id="table-listing">
 		<h2>Tables</h2>
-		
+
 		<ul>
 			<?php foreach($tables as $table): ?>
 				<li>
@@ -23,12 +23,12 @@
 		</ul>
 	</article>
 	<!-- end #table-listing -->
-	
+
 	<article class="grid_6 omega">
 		<h2>Stats</h2>
-		
+
 		<p><span class="title">Attandance:</span> <?php echo $wedding->total_checkins().'/'.$wedding->total_guests(); ?></p>
-	
+
 		<h2>Create New Table</h2>
 		<?php echo Form::open('wedding/new_table'); ?>
 			<fieldset>
@@ -37,7 +37,7 @@
 				<input type="submit" value="Create" />
 			</fieldset>
 		<?php echo Form::close(); ?>
-		
+
 		<h2>Guest Search</h2>
 		<?php echo Form::open('wedding/search_guest'); ?>
 			<fieldset>

@@ -5,31 +5,6 @@ class Model_Guest extends ORM {
 		'table' => array(),
 	);
 
-	/**
-	 * Total number of guests.
-	 * @return int
-	 */
-	public function total_guests()
-	{
-		return DB::select(array('count("id")', 'count'))
-			->from($this->_table_name)
-			->execute()
-			->get('count');
-	}
-
-	/**
-	 * Total number of guests whom have checkin.
-	 * @return int
-	 */
-	public function total_arrived()
-	{
-		return DB::select(array('count("id")', 'count'))
-			->from($this->_table_name)
-			->where('has_arrived', '=', 1)
-			->execute()
-			->get('count');
-	}
-
 	public function has_arrived() {
 		if (! $this->loaded())
 			throw new Kohana_Exception('Cannot invoke has_arrived because model is not loaded.');

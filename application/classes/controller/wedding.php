@@ -182,7 +182,7 @@ class Controller_Wedding extends Controller_Template {
 			return $this->request->redirect('wedding/index');
 		}
 
-		$this->view->table_id = $table->id;
+		$this->view->table = $table;
 	}
 
 	/**

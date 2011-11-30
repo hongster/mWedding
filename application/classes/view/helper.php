@@ -8,22 +8,21 @@ class View_Helper {
 	 */
 	public static function tagalizer($text, $url) 
 	{
-		$result = '';
+		$result = array();
 		$words = explode(' ', $text);
 		foreach ($words as $word)
 		{
 			if (substr($word, 0, 1) != '#') 
 			{
-				$result .= " $word";
+				$result[] = $word;
 				continue;
 			}
 			
 			// Hashtag found
 			$word = substr($word, 1);
-			$url = str_replace(':tag', $word, $url);
-			$result .= ' <a href="'.$url.'">'."#$word".'</a>';
+			$result[] = '<a href="'.str_replace(':tag', $word, $url).'">'."#$word".'</a>';
 		}
 		
-		return $result;
+		return implode(' ', $result);
 	}
 }

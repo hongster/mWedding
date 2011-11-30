@@ -6,10 +6,11 @@
 	<?php echo HTML::style('css/reset.css'); ?>
 	<?php echo HTML::style('css/text.css'); ?>
 	<?php echo HTML::style('css/960.css'); ?>
+	<?php echo HTML::style('css/jquery-ui-1.8.16.custom.css'); ?>
 	<?php echo HTML::style('css/style.css'); ?>
 
-	<script src="http://code.angularjs.org/0.9.15/angular-0.9.15.min.js" ng:autobind></script>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+	<script src="<?php echo URL::site('js/angular-0.9.19.min.js'); ?>" ng:autobind></script>
+	<?php echo HTML::script('js/jquery-1.7.min.js'); ?>
 	<?php echo HTML::script('js/jquery-ui-1.8.16.custom.min.js'); ?>
 </head>
 

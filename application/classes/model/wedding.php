@@ -16,7 +16,7 @@ class Model_Wedding extends ORM {
 	{
 		if ( ! $this->loaded())
 			throw new Kohana_Exception('Model_Wedding->get_guest() must be called on loaded object');
-			
+		
 		return ORM::factory('guest')
 			->join('tables')
 			->on('guests.table_id', '=', 'tables.id')

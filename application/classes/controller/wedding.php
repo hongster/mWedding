@@ -7,7 +7,7 @@ class Controller_Wedding extends Controller_Template {
 	{
 		$this->auto_render = FALSE;
 		$this->_init();
-		$guest_id = $table_id = $this->request->param('id', '');
+		$guest_id = $this->request->param('id', '');
 		$guest = $this->wedding->get_guest($guest_id);
 		if ($guest->loaded()) {
 			$guest->delete();
@@ -16,28 +16,70 @@ class Controller_Wedding extends Controller_Template {
 		return $this->request->redirect($this->request->referrer());
 	}
 	
+	public function action_delete_table()
+	{
+		$this->auto_render = FALSE;
+		$this->_init();
+		$table_id = $this->request->param('id', '');
+		$table = $this->wedding->get_table($table_id);
+		if ($table->loaded()) {
+			$table->delete();
+		}
+		
+		return $this->request->redirect(URL::site('wedding/index', TRUE));
+	}
+	
 	/**
 	 * Change table name.
 	 */
 	public function action_ajax_update_table_name()
 	{
 		$this->auto_render = FALSE;
-
-		$table_name = trim(Arr::get($_POST, 'table_name', ''));
-		if ($table_name == '')
-			return $this->response->body(json_encode(array('err'=>'Missing table name.')));
-
+		
 		$this->_init();
 		$table_id = $this->request->param('id', '');
 		// Verify table ID
 		$table = $this->wedding->get_table($table_id);
 		if ( ! $table->loaded())
-			return $this->response->body(json_encode(array('err'=>"Invalid table ID, $table_id")));
+			throw new Kohana_Exception('Invalid table ID:'.$table_id);
+
+		$table_name = trim(Arr::get($_POST, 'table_name', ''));
+		if ($table_name == '')
+			return $this->response->body($table->name);
 
 		$table->name = $table_name;
 		$table->save();
 
-		return $this->response->body(json_encode(array('status'=>'SUCCESS')));
+		return $this->response->body($table_name);
+	}
+	
+	/**
+	 * Change guest name.
+	 */
+	public function action_ajax_update_guest_name()
+	{
+		$this->auto_render = FALSE;
+		
+		$this->_init();
+		
+		// Verify guest ID
+		$guest_id = $this->request->param('id', '');
+		$guest = $this->wedding->get_guest($guest_id);
+		if ( ! $guest->loaded())
+			throw new Kohana_Exception('Invalid guest ID:'.$guest_id);
+		
+		$guest_name = trim(Arr::get($_POST, 'guest_name', ''));
+		if ($guest_name == '')
+		{
+			$return = View_Helper::tagalizer($guest->name, URL::site('wedding/tag/:tag', TRUE));
+		}
+		else {
+			$guest->name = $guest_name;
+			$guest->save();
+			$return = View_Helper::tagalizer($guest_name, URL::site('wedding/tag/:tag', TRUE));
+		}
+		
+		return $this->response->body($return);
 	}
 
 	/**

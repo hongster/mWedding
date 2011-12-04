@@ -26,8 +26,10 @@
 
 	<article class="grid_6 omega">
 		<h2>Stats</h2>
-
-		<p><span class="title">Attandance:</span> <?php echo $wedding->total_checkins().'/'.$wedding->total_guests(); ?></p>
+		<?php $percent = ($wedding->total_guests() == 0) ? '0' : 100 * $wedding->total_checkins() / $wedding->total_guests(); 
+			$percent = ((int) $percent).'%';
+		?>
+		<p><span class="title">Attandance:</span> <?php echo $percent; ?></p>
 
 		<h2>Create New Table</h2>
 		<?php echo Form::open('wedding/new_table'); ?>

@@ -15,7 +15,7 @@ class Model_Guest extends ORM {
 	public function search_by_name($name)
 	{
 		if ($this->loaded())
-			throw new Kohana_Exception('Method all_guests() cannot be called on loaded objects');
+			throw new Kohana_Exception('Method search_by_name() cannot be called on loaded objects');
 			
 		return $this->where('name', 'like', "%$name%")
 			->order_by('name', 'ASC')
@@ -30,7 +30,7 @@ class Model_Guest extends ORM {
 	public function checkin($really)
 	{
 		if (! $this->loaded())
-			throw new Kohana_Exception('Cannot invoke checkin because model is not loaded.');
+			throw new Kohana_Exception('Cannot invoke checkin() because model is not loaded.');
 		
 		$this->has_arrived = (bool)$really ? 1 : 0;
 		return $this->save();

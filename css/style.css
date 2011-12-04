@@ -5,10 +5,12 @@
 }
 
 footer {
+	font-size: 0.5em;
 	text-align: center;
 }
 
 body {
+	font-size: 16px; /* Default is too small */
 	color: #333333;
 }
 
@@ -107,6 +109,9 @@ table.search_result {
 }
 
 table.search_result td {
-	background-color: #fff0f0;
 	padding: 2px;
+}
+
+table.search_result tr:nth-child(even) {
+	background-color: #fff0f0;
 }

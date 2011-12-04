@@ -42,6 +42,25 @@ class Model_Wedding extends ORM {
 			->where('guests.name', 'like', "%$query%")
 			->find_all();
 	}
+	
+	/**
+	 * Search guests by tag.
+	 * @param string $tag
+	 * @return array Array of Model_Guest.
+	 */
+	public function search_tag($tag)
+	{
+		if ( ! $this->loaded())
+			throw new Kohana_Exception('Model_Wedding->search_tag() must be called on loaded object');
+
+		return ORM::factory('guest')
+			->join('tables', 'LEFT')
+			->on('guests.table_id', '=', 'tables.id')
+			->where('tables.wedding_id', '=', $this->id)
+			->where('guests.name', 'like', "%#$tag %")
+			->or_where('guests.name', 'like', "%#$tag")
+			->find_all();
+	}
 
 	/**
 	 * Create new guest, attach to a specified table.

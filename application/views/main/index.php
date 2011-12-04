@@ -5,7 +5,7 @@
 
 <section>
 	<article class="grid_6">
-		<h2>What is mWedding?</h2>
+		<h2>What is Sesame List?</h2>
 		
 		<p>This is a wedding guests attendance marking system. It is deisgned
 		to solve some of the problems related to organizing a wedding 
@@ -18,7 +18,7 @@
 		of such information has never been an easy task.
 		</p>
 		
-		<p>mWedding solves these problems be allow wedding organizer to
+		<p>Sesame List solves these problems be allow wedding organizer to
 		allocate guests to tables. With a built-in search function, information
 		such as dietary needs, seating assignment can be easily retireved.
 		Attandence can be marked this information is made available realtime.

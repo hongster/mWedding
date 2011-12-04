@@ -126,6 +126,12 @@ Route::set('mobile_checkin', 'mobile/checkin/<guest_id>/<checkin>',
 		'controller' => 'mobile',
 		'action'     => 'checkin',
 	));
+
+Route::set('wedding_tag', 'wedding/tag/<tag>', array('alias'=>'.+'))
+	->defaults(array(
+		'controller' => 'wedding',
+		'action'     => 'tag',
+	));
 	
 Route::set('wedding_index', 'wedding/index(/<alias>)', array('alias'=>'[a-zA-Z0-9]+'))
 	->defaults(array(

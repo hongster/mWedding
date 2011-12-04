@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:ng="http://angularjs.org">
 <head>
-	<title>mWedding</title>
+	<title>Sesame List</title>
 
 	<?php echo HTML::style('css/reset.css'); ?>
 	<?php echo HTML::style('css/text.css'); ?>
@@ -17,7 +17,7 @@
 <body>
 	<header class="container_12">
 		<section class="grid_12">
-			<h1 id="site-title"><?php echo HTML::anchor('/wedding/index', 'mWedding'); ?></h1>
+			<h1 id="site-title"><?php echo HTML::anchor('/wedding/index', 'Sesame List'); ?></h1>
 			<em>Your wedding assistant</em>
 		</section>
 	</header>
@@ -37,7 +37,7 @@
 	<!-- #content -->
 
 	<footer class="container_12">
-		(CC) BY | <a href="http://about.me/hongster">@hongster</a>
+		(CC) BY | <a href="http://about.me/hongster">@hongster</a> <a href="http://twitter.com/#!/sannchow">@sannchow</a>
 		Powered by: <a href="http://kohanaframework.org/">Kohana</a>
 		| <a href="http://angularjs.org/">AngularJS</a>
 		| <a href="http://jquery.com/">jQuery</a>

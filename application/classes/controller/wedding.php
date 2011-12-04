@@ -3,6 +3,18 @@
 class Controller_Wedding extends Controller_Template {
 	protected $wedding = FALSE;
 
+	public function action_tag()
+	{
+		$this->_init();
+		$tag = trim($this->request->param('tag', ''));
+		if ($tag == '')
+			return $this->request->redirect('wedding/index');
+		
+		$guests = $this->wedding->search_tag($tag);
+		$this->view->tag = $tag;
+		$this->view->guests = $guests;
+	}
+	
 	public function action_delete_guest()
 	{
 		$this->auto_render = FALSE;

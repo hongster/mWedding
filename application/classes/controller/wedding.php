@@ -319,7 +319,7 @@ class Controller_Wedding extends Controller_Template {
 	private function _login($alias)
 	{
 		Session::instance()->set('alias', $alias);
-		Cookie::set('alias', $alias, 31556926); // Expire in 1 year
+		Cookie::set('alias', $alias, time() + 31556926); // Expire in 1 year
 	}
 
 	private function _logout()

@@ -290,7 +290,10 @@ class Controller_Wedding extends Controller_Template {
 	private function _init()
 	{
 		// Retrieve alias from session/cookie
-		$alias = $this->_get_alias();
+		if ( ! ($alias = Session::instance()->get('alias', FALSE))) {
+			$alias = Cookie::get('alias', FALSE);
+		}
+		
 		if ($alias == FALSE)
 		{
 			$this->auto_render = FALSE;
@@ -311,19 +314,6 @@ class Controller_Wedding extends Controller_Template {
 
 		// Continue login status
 		$this->_login($alias);
-	}
-
-	/**
-	 * After login, alias will be saved in session.
-	 * @return string Saved alias.
-	 * @return FALSE User has not logged in yet.
-	 */
-	private function _get_alias()
-	{
-		$alias = $this->request->param('alias', FALSE);
-		if ($alias === FALSE) $alias = Cookie::get('alias', FALSE);
-
-		return $alias;
 	}
 
 	private function _login($alias)

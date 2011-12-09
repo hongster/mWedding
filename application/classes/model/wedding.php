@@ -57,8 +57,10 @@ class Model_Wedding extends ORM {
 			->join('tables', 'LEFT')
 			->on('guests.table_id', '=', 'tables.id')
 			->where('tables.wedding_id', '=', $this->id)
-			->where('guests.name', 'like', "%#$tag %")
-			->or_where('guests.name', 'like', "%#$tag")
+			->and_where_open()
+				->where('guests.name', 'like', "%#$tag %")
+				->or_where('guests.name', 'like', "%#$tag")
+			->and_where_close()
 			->find_all();
 	}
 

@@ -127,7 +127,7 @@ Route::set('mobile_checkin', 'mobile/checkin/<guest_id>/<checkin>',
 		'action'     => 'checkin',
 	));
 
-Route::set('wedding_tag', 'wedding/tag/<tag>', array('alias'=>'.+'))
+Route::set('wedding_tag', 'wedding/tag/<tag>', array('tag'=>'.+'))
 	->defaults(array(
 		'controller' => 'wedding',
 		'action'     => 'tag',

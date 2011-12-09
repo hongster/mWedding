@@ -29,7 +29,7 @@
 		</div> 
 		
 		<div data-role="footer" id="footer" data-theme="e">
-			<strong>Seasame List</strong> by 
+			<strong>Sesame List</strong> by 
 			<span><a href="http://twitter.com/hongster" rel="external" data-ajax="false" style="">@hongster</a></span>
 			<span><a href="http://twitter.com/sanchow" rel="external" data-ajax="false" style="">@sannchow</a></span>
 		</div> 

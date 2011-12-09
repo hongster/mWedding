@@ -2,7 +2,7 @@
 $arrived = array();
 $not_yet = array();
 
-foreach ($guests as $guest)
+foreach ($table->all_guests() as $guest)
 {
 	if ($guest->has_arrived())
 	{
@@ -27,7 +27,7 @@ asort($not_yet);
 				<li>
 					<a href="#"><?php echo $name; ?></a>
 					<?php echo HTML::anchor(
-						Route::get('mobile_checkin')->uri(array('guest_id'=>$id, 'checkin'=>1)),
+						'mobile/guest_checkin/'.$id,
 						'',
 						array('data-icon'=>'check')
 					);?>
@@ -41,7 +41,7 @@ asort($not_yet);
 				<li>
 					<a href="#"><?php echo $name; ?></a>
 					<?php echo HTML::anchor(
-						Route::get('mobile_checkin')->uri(array('guest_id'=>$id, 'checkin'=>0)),
+						'mobile/guest_checkout/'.$id,
 						'',
 						array('data-icon'=>'delete')
 					);?>
@@ -50,3 +50,7 @@ asort($not_yet);
 		<?php endif; ?>
 	</ul>
 </div>
+
+<script>
+
+</script>

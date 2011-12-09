@@ -120,13 +120,6 @@ Route::set('api', 'api/(<controller>(/<action>(/<id>)))')
 		'action'     => 'search',
 	));
 
-Route::set('mobile_checkin', 'mobile/checkin/<guest_id>/<checkin>', 
-	array('guest_id'=>'\d+', 'checkin'=>'1|0'))
-	->defaults(array(
-		'controller' => 'mobile',
-		'action'     => 'checkin',
-	));
-
 Route::set('wedding_tag', 'wedding/tag/<tag>', array('tag'=>'.+'))
 	->defaults(array(
 		'controller' => 'wedding',

@@ -1,10 +1,3 @@
-<?php echo Form::open('mobile/search', array('method'=>'post', 'data-ajax'=>'false')); ?>
-	<div data-role="fieldcontain">
-		<label for="search">Guest Name:</label>
-		<input type="search" name="query" id="search" value="" />
-	</div>
-<?php echo Form::close(); ?>
-
 <?php // Separate guests in 2 lists
 $arrived = array();
 $not_yet = array();
@@ -27,6 +20,15 @@ ksort($not_yet);
 ?>
 
 <div class="content-primary">
+	<?php echo Form::open('mobile/search'); ?>
+		<?php echo Form::input(
+			'query',
+			isset($query) ? $query : '',
+			array('type'=>'search', 'placeholder'=>'guest name', 'required'=>'required')
+		); ?>
+		<?php echo Form::submit('', 'Search'); ?>
+	<?php echo Form::close(); ?>
+	
 	<ul data-role="listview" data-divider-theme="b" data-inset="true">		
 		<?php if (count($not_yet)): ?>
 			<li data-role="list-divider">Waiting</li>

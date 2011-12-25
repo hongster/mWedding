@@ -10,7 +10,7 @@
 		<p>This is a wedding guests attendance marking system. It is deisgned
 		to solve some of the problems related to organizing a wedding 
 		dinner. The wedding couples needs to know the number of guests 
-		who have turned up, so that dinner commences when majority
+		who have turned up, so that dinner can commences when majority
 		of the invited guests have arrived. When a guest arrived, there is a need
 		to efficiently determine where he/she sits, and mark attendance. The
 		banquet manager needs to be informed on the number of guests
@@ -18,10 +18,10 @@
 		of such information has never been an easy task.
 		</p>
 		
-		<p>Sesame List solves these problems be allow wedding organizer to
-		allocate guests to tables. With a built-in search function, information
+		<p>Sesame List solves these problems by allowing wedding organizers to
+		to keep track of attendance. With a built-in search function, information
 		such as dietary needs, seating assignment can be easily retireved.
-		Attandence can be marked this information is made available realtime.
+		Attandence information can be tracked realtime.
 		</p>
 	</article>
 	<!-- what is mWedding -->

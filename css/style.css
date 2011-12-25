@@ -5,12 +5,12 @@
 }
 
 footer {
-	font-size: 0.5em;
+	font-size: 0.8em;
 	text-align: center;
 }
 
 body {
-	font-size: 16px; /* Default is too small */
+	font-size: 100%; /* Default is too small */
 	color: #333333;
 }
 

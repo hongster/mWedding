@@ -38,9 +38,9 @@
 
 	<footer class="container_12">
 		(CC) BY | <a href="http://about.me/hongster">@hongster</a> <a href="http://twitter.com/#!/sannchow">@sannchow</a>
-		Powered by: <a href="http://kohanaframework.org/">Kohana</a>
-		| <a href="http://angularjs.org/">AngularJS</a>
-		| <a href="http://jquery.com/">jQuery</a>
+		| Powered by: <a href="http://kohanaframework.org/">Kohana</a>
+		<a href="http://angularjs.org/">AngularJS</a>
+		<a href="http://jquery.com/">jQuery</a>
 	</footer>
 
 	<script>

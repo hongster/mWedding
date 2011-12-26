@@ -276,11 +276,57 @@ class Controller_Wedding extends Controller_Template {
 		$this->response->body(json_encode($array));
 	}
 
+	/**
+	 * Login using $alias (wedding code).
+	 * $alias can be passed via $_POST or URL (/wedding/login/WED_CODE)
+	 */
+	public function action_login()
+	{
+		$this->auto_render = FALSE;
+		
+		// Try POST then URL
+		$alias = isset($_POST['alias'])
+			? $_POST['alias']
+			: $this->request->param('alias', FALSE);
+		
+		// Missing alias
+		if ( ! $alias)
+		{
+			$this->_logout();
+			$this->flash_err_msg("The wedding code is invalid/missing.");
+			return $this->request->redirect('main/get_started');
+		}
+		
+		// Verify alias
+		$this->wedding = ORM::factory('wedding')->load_alias($alias);
+		if ( ! $this->wedding->loaded())
+		{
+			$this->_logout();
+			$this->flash_err_msg("'$alias' is an invalid wedding code.");
+			$this->auto_render = FALSE;
+			return $this->request->redirect('main/get_started');
+		}
+
+		// Save login status
+		$this->_login($alias);
+		return $this->request->redirect('wedding');
+	}
+	
+	public function action_logout()
+	{
+		$this->auto_render = FALSE;
+		$this->_logout();
+		return $this->request->redirect();
+	}
+
+	/**
+	 * Show stats for all tables.
+	 */
 	public function action_index()
 	{
 		$this->_init();
-		$this->view->wedding = $this->wedding;
-		$this->view->tables = $this->wedding->tables->find_all();
+		$this->view->wedding = $this->wedding;	
+		$this->view->tables = $this->wedding->tables->find_all();	
 	}
 
 	/**
@@ -289,27 +335,21 @@ class Controller_Wedding extends Controller_Template {
 	 */
 	private function _init()
 	{
-		// Retrieve alias from session/cookie
-		if ( ! ($alias = Session::instance()->get('alias', FALSE))) {
-			$alias = Cookie::get('alias', FALSE);
-		}
-		
-		if ($alias == FALSE)
+		// Retrieve alias from cookie
+		if (($alias = Cookie::get('alias', FALSE)) == FALSE)
 		{
 			$this->auto_render = FALSE;
-			return $this->request->redirect('main');
+			return $this->request->redirect();
 		}
 
 		// Verify alias
 		$this->wedding = ORM::factory('wedding')->load_alias($alias);
-
-		$session = Session::instance();
 		if ( ! $this->wedding->loaded())
 		{
 			$this->_logout();
-			$this->flash_err_msg("'$alias' is an invalid wedding alias ID.");
+			$this->flash_err_msg("'$alias' is an invalid wedding code.");
 			$this->auto_render = FALSE;
-			return $this->request->redirect('main');
+			return $this->request->redirect('main/get_started');
 		}
 
 		// Continue login status
@@ -324,10 +364,11 @@ class Controller_Wedding extends Controller_Template {
 
 	private function _logout()
 	{
-		Session::instance()->delete('alias');
 		Cookie::delete('alias');
+		Session::instance()->destroy();
 	}
 
+	// XXX still needed? anyone using?
 	public function action_ajax_new()
 	{
 		$this->auto_render = FALSE;

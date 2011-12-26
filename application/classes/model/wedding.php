@@ -185,28 +185,12 @@ class Model_Wedding extends ORM {
 		return $this;
 	}
 
-	public function new_wedding($num_tables)
+	public function new_wedding($alias, $num_tables=0)
 	{
 		if ($this->loaded())
 			throw new Kohana_Exception('Model_Wedding->new_wedding() cannot be called on loaded object');
 
-		// Generate unique alias
-		while (TRUE)
-		{
-			$alias = $this->_random_chars(5);
-			$duplicate = DB::select('id')
-				->from($this->table_name())
-				->where('alias', '=', $alias)
-				->limit(1)
-				->execute()
-				->count();
-
-			if ( ! $duplicate)
-				break;
-		}
-
 		// Create new wedding record, and tables
-		$this->clear();
 		$this->alias = $alias;
 		if ( ! $this->save())
 			throw new Kohana_Exception('Model_Wedding->new_wedding cannot create new wedding record.');
@@ -235,19 +219,5 @@ class Model_Wedding extends ORM {
 		}
 
 		return $this;
-	}
-
-	private function _random_chars($length)
-	{
-		$chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-		$last_index = strlen($chars) - 1;
-		$alias = '';
-		while ($length)
-		{
-			$alias .= substr($chars, mt_rand(0, $last_index), 1);
-			$length--;
-		}
-
-		return $alias;
 	}
 }

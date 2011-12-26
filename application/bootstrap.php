@@ -126,10 +126,10 @@ Route::set('wedding_tag', 'wedding/tag/<tag>', array('tag'=>'.+'))
 		'action'     => 'tag',
 	));
 	
-Route::set('wedding_index', 'wedding/index(/<alias>)', array('alias'=>'[a-zA-Z0-9]+'))
+Route::set('wedding_login', 'wedding/login/<alias>', array('alias'=>'[a-zA-Z0-9_-]+'))
 	->defaults(array(
 		'controller' => 'wedding',
-		'action'     => 'index',
+		'action'     => 'login',
 	));	
 
 Route::set('default', '(<controller>(/<action>(/<id>)))')

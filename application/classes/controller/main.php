@@ -6,27 +6,46 @@ class Controller_Main extends Controller_Template {
 	{
 	}
 	
-	public function action_search($query = NULL)
+	public function action_get_started()
 	{
-		$query = $this->_determine_query($query);
-		
-		$this->view->query = $query;
-		$this->view->quests = ORM::factory('guest')->search_by_name($query);	
+		if (! $_POST)
+			return;
+			
+		 /* Create a new wedding list */
+		 // Validate alias
+		 $alias = Arr::get($_POST, 'alias', '');
+		 if ( ! $this->_valid_alias($alias)) 
+		 {
+			 $this->flash_err_msg('Invalid wedding code. Allowed characters: alphabets, digits, hyphen, underscores.');
+			 return;
+		 }
+		 
+		 // Check is alias is used
+		 $wedding = ORM::factory('wedding')->load_alias($alias); 
+		 if ($wedding->loaded())
+		 {
+			 $this->flash_err_msg('This wedding code is already in used. Please try another code.');
+			 return;
+		 }
+		 
+		 // Create new wedding list and 1 table
+		 $wedding->clear();
+		 $wedding->new_wedding($alias, 1);
+		 $this->auto_render = FALSE;
+		 $this->request->redirect('wedding/index/'.$alias);
 	}
 	
 	/**
-	 * POST['query'] overwrites the parameter in URL.
-	 * 
-	 * @param string $query Query parameter from URL.
+	 * Validation check.
+	 * Allow: [A-Za-z0-9_-]
 	 */
-	private function _determine_query($query = NULL)
+	private function _valid_alias($alias)
 	{
-		// Using trim & empty to identify empty string
-		$result = trim(Arr::get($_POST, 'query', ''));
-		$result = empty($result) ? NULL : trim($query);
-		
-		// Just in case URL query parameter is empty string
-		return empty($result) ? NULL : $result;
+		if ($alias == '')
+			return FALSE;
+		elseif (preg_match('/[^A-Za-z0-9_-]/', $alias))
+			return FALSE;
+			
+			return TRUE;
 	}
-
 } // End Main

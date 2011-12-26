@@ -45,63 +45,8 @@
 			<li>Start dinner when enough guests have arrived.</li>
 		</ol>
 		
-		<p id="get-started"><a href="#" class="button">Get Started</a></p>
+		<p><?php echo HTML::anchor('/main/get_started', 'Get started', array('class'=>'button')); ?></p>
 	</article>
 	<!-- howto -->	
 	<div class="clear"></div>
 </section>
-
-<!-- get started form -->
-<div id="get-started-form" title="Get Started">
-	<p>Indicate the number of tables in the wedding dinner. Don't worry, you can change it later.</p>
-	
-	<?php echo Form::open('wedding/ajax_new'); ?>
-		<fieldset>
-			<p>
-				<label for="num_tables">Number of tables:</label>
-				<input type="number" min="1" max="100" required="required" value="10" name="num_tables" id="num_tables" />
-			</p>
-			
-			<p>
-				
-			</p>
-		</fieldset>
-	<?php echo Form::close(); ?>
-</div>
-<!-- end get started form -->
-
-<script>
-$(document).ready(function() {
-	$("#get-started-form").dialog({
-		autoOpen: false,
-		modal: true,
-		minWidth: 500,
-		buttons: {
-			"Cancel": function() {
-				$(this).dialog("close");
-			},
-			"Next": function() {
-				$.post($("#get-started-form form:first").attr("action"), $("#get-started-form form:first").serialize(),
-					function(data){
-						if (data.status == "ERROR") {
-							alert(data.err_msg);
-							return;
-						}
-						else {
-							location.href = data.redirect;
-						}
-					}
-					, 'json')
-				.error(function(){
-					alert("Unable to connect to server. Please try again later.");
-				});
-			}
-		}
-	});
-	
-	$("#get-started").click(function(event) {
-		event.preventDefault();
-		$("#get-started-form").dialog("open");
-	});
-});
-</script>

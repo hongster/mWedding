@@ -1,7 +1,7 @@
 <section class="grid_12">
 	<p>
 		Remember to bookmark this URL! <?php echo HTML::anchor(
-			Route::url('wedding_index', array('alias'=>Session::instance()->get('alias')), TRUE)
+			Route::url('wedding_login', array('alias'=>Session::instance()->get('alias')), TRUE)
 		); ?>
 </p>
 </section>

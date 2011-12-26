@@ -32,7 +32,7 @@ class Controller_Main extends Controller_Template {
 		 $wedding->clear();
 		 $wedding->new_wedding($alias, 1);
 		 $this->auto_render = FALSE;
-		 $this->request->redirect('wedding/index/'.$alias);
+		 $this->request->redirect('wedding/login/'.$alias);
 	}
 	
 	/**
